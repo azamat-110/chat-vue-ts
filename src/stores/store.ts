@@ -1,41 +1,41 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useDataStore = defineStore('counter', () => {
+export interface Messages {
+	id: number
+	userId: number
+	messageText: string
+	messageTime: string
+	imgUrl?: string
+}
+
+export interface Users {
+	id: number
+	name: string
+	avatar: string
+	isTyping: boolean
+	messageInput: string
+}
+
+export const useDataStore = defineStore('data', () => {
 	let currentUserId = ref<number>(0)
 
-	interface Messages {
-		id: number
-		userId: number
-		messageText: string
-		messageTime: string
-		imgUrl: string
-	}
-
-	const messages = reactive<Array<Messages>>([
+	const messages = reactive<Messages[]>([
 		{
 			id: 0,
 			userId: 0,
 			messageText: 'Привет, как дела?',
-			messageTime: '00:00',
+			messageTime: new Date().toLocaleTimeString(),
 			imgUrl: '',
 		},
 		{
 			id: 1,
 			userId: 1,
 			messageText: 'Хорошо, а у тебя?',
-			messageTime: '00:01',
+			messageTime: new Date().toLocaleTimeString(),
 			imgUrl: '',
 		},
 	])
-
-	interface Users {
-		id: number
-		name: string
-		avatar: string
-		isTyping: boolean
-		messageInput: string
-	}
 
 	const users = reactive<Array<Users>>([
 		{
@@ -60,14 +60,12 @@ export const useDataStore = defineStore('counter', () => {
 		imgUrl: string = '',
 		comment: string = ''
 	): void {
-		const hours: string = new Date().getHours().toString().padStart(2, '0')
-		const minutes: string = new Date().getMinutes().toString().padStart(2, '0')
-
+		const time: string = new Date().toLocaleTimeString().slice(0, 5)
 		const newMessage: Messages = {
 			id: messages.length + 1,
 			userId: userId,
 			messageText: comment || users[userId].messageInput,
-			messageTime: hours + ':' + minutes,
+			messageTime: time,
 			imgUrl: imgUrl || '',
 		}
 		messages.push(newMessage)

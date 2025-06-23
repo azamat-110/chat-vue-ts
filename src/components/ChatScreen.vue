@@ -3,6 +3,7 @@ import IncomeMessage from '@/components/IncomeMessage.vue'
 import SendImageModal from '@/components/SendImageModal.vue'
 import { useDataStore } from '@/stores/store'
 import { ref } from 'vue'
+import type { Messages } from '@/stores/store'
 
 interface Props {
 	user: object
@@ -32,14 +33,16 @@ function input(): void {
 		clearTimeout(timeout)
 		timeout = undefined
 	}
-	const find = dataStore.users.find(a => a.id != props.user.id)
+	const find: object = dataStore.users.find(a => a.id != props.user.id)
 	if (!find) return
 	if (!find.isTyping) dataStore.updateTypingStatus(find.id, true)
 	timeout = setTimeout(() => {
 		dataStore.updateTypingStatus(find.id, false)
 	}, 2000)
 }
+
 // SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+// https://github.com/azamat-110/chat-vue-ts
 </script>
 
 <template>
