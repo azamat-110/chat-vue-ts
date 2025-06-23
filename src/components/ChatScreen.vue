@@ -37,7 +37,7 @@ function input(): void {
 	if (!find.isTyping) dataStore.updateTypingStatus(find.id, true)
 	timeout = setTimeout(() => {
 		dataStore.updateTypingStatus(find.id, false)
-	}, 2_000)
+	}, 2000)
 }
 // SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
 </script>
