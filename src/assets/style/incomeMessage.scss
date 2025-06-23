@@ -1,0 +1,51 @@
+.send-message {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+.message-text {
+	max-width: 302px;
+	// padding: 5px 10px;
+	font-family: 'Roboto';
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 100%;
+
+	& img {
+		max-width: 100%;
+		border-radius: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2px 2px 0 2px;
+	}
+}
+
+.without-img {
+	padding: 5px 10px;
+}
+
+.with-img {
+	padding: 5px 0px 6px 5px;
+}
+
+.message-time {
+	font-family: 'Roboto';
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 100%;
+}
+
+.income-message {
+	background: #c4bfff;
+	border-radius: 15px 15px 15px 0;
+}
+
+.outcome-message {
+	background: #d0dcff;
+	border-radius: 15px 15px 0 15px;
+}
+
+.end {
+	justify-content: end;
+}

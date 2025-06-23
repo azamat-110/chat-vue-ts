@@ -1,0 +1,21 @@
+@import './style/chatScreen.scss';
+@import './style/incomeMessage.scss';
+@import './style/mainPage.scss';
+@import './style/sendImageModal.scss';
+
+* {
+	max-width: 1920px;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+input,
+button {
+	border: none;
+	outline: none;
+	background-color: transparent;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+}
