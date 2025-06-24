@@ -1,17 +1,29 @@
 <script setup lang="ts">
 import { useDataStore } from '@/stores/store'
+import type { Props } from './SendImageModalProps.vue'
+import type { Emits } from './SendImageModalEmits.vue'
+import { ref } from 'vue'
+import type { SendMessArr } from '@/stores/storeTypes'
 
 const dataStore = useDataStore()
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
+const imgUrl = ref('')
+const comment = ref('')
 
-interface Props {
-	userId: number
+function toggleModal() {
+	emit('toggleModal')
 }
 
-const props = defineProps<Props>()
-
-const emit = defineEmits<{
-	(e: 'toggleModal'): void
-}>()
+function sendModalMessage() {
+	const data: SendMessArr = {
+		userId: props.userId,
+		messageText: comment.value,
+		imgUrl: imgUrl.value,
+	}
+	dataStore.sendMessage(data)
+	emit('toggleModal')
+}
 </script>
 
 <template>
@@ -23,22 +35,22 @@ const emit = defineEmits<{
 				<input type="text" placeholder="URL" v-model="imgUrl" required />
 			</label>
 			<label class="modal__content-input">
-				<span>URL</span>
-				<input v-model="comment" type="text" placeholder="Комментарий" />
+				<span>Комментарий</span>
+				<input
+					ref="commentInput"
+					v-model="comment"
+					type="text"
+					placeholder="Комментарий"
+				/>
 			</label>
 			<div class="modal__buttons">
-				<button class="modal__buttons-cancel" @click="emit('toggleModal')">
+				<button class="modal__buttons-cancel" @click="toggleModal">
 					Отмена
 				</button>
 				<button
 					type="submit"
 					class="modal__buttons-send"
-					@click="
-						() => {
-							dataStore.sendMessage(userId, imgUrl, comment)
-							emit('toggleModal')
-						}
-					"
+					@click="sendModalMessage"
 				>
 					Отправить
 				</button>

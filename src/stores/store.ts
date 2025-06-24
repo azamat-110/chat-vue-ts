@@ -1,42 +1,21 @@
 import { defineStore } from 'pinia'
-import { reactive, ref } from 'vue'
-
-export enum Status {
-	online = 'online',
-	typing = 'typing',
-}
-
-export interface Messages {
-	id: number
-	userId: number
-	messageText: string
-	messageTime: string
-	imgUrl?: string
-}
-
-export interface Users {
-	id: number
-	name: string
-	avatar: string
-	status: Status
-	messageInput: string
-}
+import { reactive } from 'vue'
+import type { Messages, Users, SendMessArr } from './storeTypes'
+import { Status } from './storeTypes'
 
 export const useDataStore = defineStore('data', () => {
-	let currentUserId = ref<number>(0)
-
 	const messages = reactive<Messages[]>([
 		{
 			id: 0,
 			userId: 0,
 			messageText: 'Привет, как дела?',
-			messageTime: new Date().toLocaleTimeString().slice(0, 5),
+			messageTime: Date.now(),
 		},
 		{
 			id: 1,
 			userId: 1,
 			messageText: 'Хорошо, а у тебя?',
-			messageTime: new Date().toLocaleTimeString().slice(0, 5),
+			messageTime: Date.now(),
 		},
 	])
 
@@ -46,30 +25,22 @@ export const useDataStore = defineStore('data', () => {
 			name: 'Александр',
 			avatar: 'public/images/alexAvatar.png',
 			status: Status.online,
-			messageInput: '',
 		},
 		{
 			id: 1,
 			name: 'Евгений',
 			avatar: 'public/images/evgenyAvatar.png',
 			status: Status.online,
-			messageInput: '',
 		},
 	])
 
-	function sendMessage(
-		userId: number,
-		messageInput: string,
-		imgUrl: string = '',
-		comment: string = ''
-	): void {
-		const time: string = new Date().toLocaleTimeString().slice(0, 5)
+	function sendMessage(data: SendMessArr): void {
 		const newMessage: Messages = {
 			id: messages.length + 1,
-			userId: userId,
-			messageText: comment || messageInput,
-			messageTime: time,
-			imgUrl: imgUrl || '',
+			userId: data.userId,
+			messageText: data.messageText,
+			messageTime: Date.now(),
+			imgUrl: data.imgUrl,
 		}
 		messages.push(newMessage)
 	}
@@ -82,7 +53,6 @@ export const useDataStore = defineStore('data', () => {
 
 	return {
 		messages,
-		currentUserId,
 		users,
 		updateTypingStatus,
 		sendMessage,
