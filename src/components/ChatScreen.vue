@@ -17,8 +17,8 @@ const userStatus = computed<string>(() =>
 
 const sendButtonImg = computed(() =>
 	userMessageInput.value
-		? new URL('@/assets/images/sendButton.png', import.meta.url)
-		: new URL('@/assets/images/photoButton.png', import.meta.url)
+		? 'public/images/sendButton.png'
+		: 'public/images/photoButton.png'
 )
 
 function toggleModal(): void {
