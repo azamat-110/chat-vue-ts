@@ -3,18 +3,25 @@ import IncomeMessage from '@/components/IncomeMessage.vue'
 import SendImageModal from '@/components/SendImageModal.vue'
 import { useDataStore } from '@/stores/store'
 import { ref } from 'vue'
-import type { Messages } from '@/stores/store'
+import type { Users } from '@/stores/store'
+import { Status } from '@/stores/store'
 
-interface Props {
-	user: object
+export interface Props {
+	user: Users
 }
 
 const dataStore = useDataStore()
 const props = defineProps<Props>()
 const showModal = ref<boolean>(false)
 
-const photoButton = new URL('@/assets/images/photoButton.png', import.meta.url)
-const sendButton = new URL('@/assets/images/sendButton.png', import.meta.url)
+const photoButton: any = new URL(
+	'@/assets/images/photoButton.png',
+	import.meta.url
+)
+const sendButton: any = new URL(
+	'@/assets/images/sendButton.png',
+	import.meta.url
+)
 
 function toggleModal(): void {
 	showModal.value = !showModal.value
@@ -24,25 +31,24 @@ function toggleModal(): void {
 function sendCurrentMessage(): void {
 	props.user.messageInput
 		? dataStore.sendMessage(props.user.id, props.user.messageInput)
-		: toggleModal(props.user.id)
+		: toggleModal()
 	props.user.messageInput = ''
 }
-let timeout: ReturnType<typeof setTimeout>
+
+let timeout: any
 function input(): void {
 	if (timeout) {
 		clearTimeout(timeout)
 		timeout = undefined
 	}
-	const find: object = dataStore.users.find(a => a.id != props.user.id)
+	const find: any = dataStore.users.find(a => a.id != props.user.id)
 	if (!find) return
-	if (!find.isTyping) dataStore.updateTypingStatus(find.id, true)
+	if (find.status === Status.online)
+		dataStore.updateTypingStatus(find.id, Status.typing)
 	timeout = setTimeout(() => {
-		dataStore.updateTypingStatus(find.id, false)
-	}, 2000)
+		dataStore.updateTypingStatus(find.id, Status.online)
+	}, 2_000)
 }
-
-// SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
-// https://github.com/azamat-110/chat-vue-ts
 </script>
 
 <template>
@@ -52,7 +58,7 @@ function input(): void {
 			<div class="userinfo">
 				<h1 class="username">{{ user.name }}</h1>
 				<p class="status">
-					{{ user.isTyping ? 'Печатает...' : 'Онлайн' }}
+					{{ user.status === Status.typing ? 'Печатает...' : 'Онлайн' }}
 				</p>
 			</div>
 		</header>

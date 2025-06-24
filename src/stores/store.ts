@@ -1,5 +1,10 @@
-import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { reactive, ref } from 'vue'
+
+export enum Status {
+	online = 'online',
+	typing = 'typing',
+}
 
 export interface Messages {
 	id: number
@@ -13,7 +18,7 @@ export interface Users {
 	id: number
 	name: string
 	avatar: string
-	isTyping: boolean
+	status: Status
 	messageInput: string
 }
 
@@ -25,31 +30,29 @@ export const useDataStore = defineStore('data', () => {
 			id: 0,
 			userId: 0,
 			messageText: 'Привет, как дела?',
-			messageTime: new Date().toLocaleTimeString(),
-			imgUrl: '',
+			messageTime: new Date().toLocaleTimeString().slice(0, 5),
 		},
 		{
 			id: 1,
 			userId: 1,
 			messageText: 'Хорошо, а у тебя?',
-			messageTime: new Date().toLocaleTimeString(),
-			imgUrl: '',
+			messageTime: new Date().toLocaleTimeString().slice(0, 5),
 		},
 	])
 
-	const users = reactive<Array<Users>>([
+	const users = reactive<Users[]>([
 		{
 			id: 0,
 			name: 'Александр',
 			avatar: 'public/images/alexAvatar.png',
-			isTyping: false,
+			status: Status.online,
 			messageInput: '',
 		},
 		{
 			id: 1,
 			name: 'Евгений',
 			avatar: 'public/images/evgenyAvatar.png',
-			isTyping: false,
+			status: Status.online,
 			messageInput: '',
 		},
 	])
@@ -64,18 +67,24 @@ export const useDataStore = defineStore('data', () => {
 		const newMessage: Messages = {
 			id: messages.length + 1,
 			userId: userId,
-			messageText: comment || users[userId].messageInput,
+			messageText: comment || messageInput,
 			messageTime: time,
 			imgUrl: imgUrl || '',
 		}
 		messages.push(newMessage)
 	}
 
-	function updateTypingStatus(userId: number, isTyping: boolean): void {
+	function updateTypingStatus(userId: number, userStatus: Status): void {
 		const find = users.find(a => a.id == userId)
 		if (!find) return
-		find.isTyping = isTyping
+		find.status = userStatus
 	}
 
-	return { messages, currentUserId, users, updateTypingStatus, sendMessage }
+	return {
+		messages,
+		currentUserId,
+		users,
+		updateTypingStatus,
+		sendMessage,
+	}
 })
