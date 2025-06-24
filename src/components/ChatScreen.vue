@@ -4,10 +4,10 @@ import SendImageModal from '@/components/SendImageModal.vue'
 import { useDataStore } from '@/stores/store'
 import { ref, computed } from 'vue'
 import { Status, type SendMessArr } from '@/stores/storeTypes'
-import type { Props } from './ChatScreenProps.vue'
+import type { ChatScreenProps } from './interface'
 
 const dataStore = useDataStore()
-const props = defineProps<Props>()
+const props = defineProps<ChatScreenProps>()
 const showModal = ref<boolean>(false)
 let timeout: any
 let userMessageInput = ref<string>('')

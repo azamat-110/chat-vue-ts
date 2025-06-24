@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useDataStore } from '@/stores/store'
-import type { Props } from './SendImageModalProps.vue'
-import type { Emits } from './SendImageModalEmits.vue'
+import type { SendImageModalProps } from './interface'
+import type { SendImageModalEmits } from './interface'
 import { ref } from 'vue'
 import type { SendMessArr } from '@/stores/storeTypes'
 
 const dataStore = useDataStore()
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+const props = defineProps<SendImageModalProps>()
+const emit = defineEmits<SendImageModalEmits>()
 const imgUrl = ref('')
 const comment = ref('')
 

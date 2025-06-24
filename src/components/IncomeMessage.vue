@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Props } from './IncomeMessageProps.vue'
-const props = defineProps<Props>()
+import type { IncopmeMessageProps } from './interface'
+const props = defineProps<IncopmeMessageProps>()
 const messageTextClass =
 	props.messageData.userId == props.userId
 		? 'outcome-message'
