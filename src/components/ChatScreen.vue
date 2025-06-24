@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import IncomeMessage from '@/components/IncomeMessage.vue'
 import SendImageModal from '@/components/SendImageModal.vue'
+import { Status, type SendMessArr } from '@/stores/interface'
 import { useDataStore } from '@/stores/store'
-import { ref, computed } from 'vue'
-import { Status, type SendMessArr } from '@/stores/storeTypes'
+import { computed, ref } from 'vue'
 import type { ChatScreenProps } from './interface'
 
 const dataStore = useDataStore()

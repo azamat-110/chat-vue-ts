@@ -1,5 +1,4 @@
-import type { Messages } from '@/stores/storeTypes'
-import type { Users } from '@/stores/storeTypes'
+import type { Messages, Users } from '@/stores/interface'
 
 export interface ChatScreenProps {
 	user: Users

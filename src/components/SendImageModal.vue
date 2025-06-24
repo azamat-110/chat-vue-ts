@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import type { SendMessArr } from '@/stores/interface'
 import { useDataStore } from '@/stores/store'
-import type { SendImageModalProps } from './interface'
-import type { SendImageModalEmits } from './interface'
 import { ref } from 'vue'
-import type { SendMessArr } from '@/stores/storeTypes'
+import type { SendImageModalEmits, SendImageModalProps } from './interface'
 
 const dataStore = useDataStore()
 const props = defineProps<SendImageModalProps>()

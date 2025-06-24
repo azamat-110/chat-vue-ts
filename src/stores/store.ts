@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
-import type { Messages, Users, SendMessArr } from './storeTypes'
-import { Status } from './storeTypes'
+import type { Messages, SendMessArr, Users } from './interface'
+import { Status } from './interface'
 
 export const useDataStore = defineStore('data', () => {
 	const messages = reactive<Messages[]>([
