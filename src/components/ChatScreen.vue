@@ -15,12 +15,6 @@ const userStatus = computed<string>(() =>
 	props.user.status == Status.typing ? 'Печатает...' : 'Онлайн'
 )
 
-const sendButtonImg = computed(() =>
-	userMessageInput.value
-		? 'public/images/sendButton.png'
-		: 'public/images/photoButton.png'
-)
-
 function toggleModal(): void {
 	showModal.value = !showModal.value
 }
@@ -78,7 +72,18 @@ function input(): void {
 				@input="input"
 			/>
 			<button class="send-button" type="submit">
-				<img :src="sendButtonImg" alt="send-button" class="send-icon" />
+				<img
+					v-if="userMessageInput"
+					src="../assets/images/sendButton.png"
+					alt="send-button"
+					class="send-icon"
+				/>
+				<img
+					v-else
+					src="../assets/images/photoButton.png"
+					alt="send-button"
+					class="send-icon"
+				/>
 			</button>
 			<SendImageModal
 				v-if="showModal"
@@ -88,5 +93,3 @@ function input(): void {
 		</form>
 	</div>
 </template>
-
-<style></style>
